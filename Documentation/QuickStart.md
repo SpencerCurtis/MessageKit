@@ -6,7 +6,7 @@ The driving force behind **MessageKit** is the `MessageType` protocol which prov
 ```Swift
 public protocol MessageType {
 
-    var sender: Sender { get }
+    var sender: SenderType { get }
 
     var messageId: String { get }
 
@@ -15,17 +15,17 @@ public protocol MessageType {
     var kind: MessageKind { get }
 }
 ```
-First, each `MessageType` is required to have a `Sender` which contains two properties, `id` and `displayName`:
+First, each `MessageType` is required to have an object conforming to the `SenderType` protocol which contains two properties, `id` and `displayName`:
 ### Sender
+
 ```Swift
-public struct Sender {
+public protocol SenderType {
+    var senderId: String { get }
 
-    public let id: String
-
-    public let displayName: String
+    var displayName: String { get }
 }
 ```
-**MessageKit** uses the `Sender` type to determine if a message was sent by the current user or to the current user.
+**MessageKit** uses the `SenderType` protocol to determine if a message was sent by the current user or to the current user.
 
 Second, each message must have its own `messageId` which is a unique `String` identifier for the message.
 
